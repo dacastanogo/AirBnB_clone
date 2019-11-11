@@ -25,3 +25,9 @@ class BaseModel:
             models.storage.new(self)
             self.save()
 
+def __str__(self):
+        """ String Representation of BaseModel """
+        class_name = self.__class__.__name__
+        string = ("[{}] ({}) {}".format(class_name, self.id, self.__dict__))
+        return string
+
