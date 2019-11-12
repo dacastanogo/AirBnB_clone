@@ -25,9 +25,21 @@ class BaseModel:
             models.storage.new(self)
             self.save()
 
-def __str__(self):
+    def __str__(self):
         """ String Representation of BaseModel """
         class_name = self.__class__.__name__
         string = ("[{}] ({}) {}".format(class_name, self.id, self.__dict__))
         return string
 
+    def save(self):
+        """Updates the public instance attribute updated_at with the current datetime"""
+        self.updated_at = datetime.today()
+        models.storage.save()
+
+    def to_dict(self):
+        """Rreturns a dictionary containing all keys/values of __dict__ of the instance"""
+        my_dict = self.__dict__.copy()
+        my_dict['created_at'] = self.created_at.isoformat()
+        my_dict['updated_at'] = self.updated_at.isoformat()
+        my_dict['__class__'] = self.__class__.__name__
+        return(my_dict)
