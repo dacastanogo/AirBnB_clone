@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Module for the entry point of the command interpreter."""
+"""Modulee for the entry point of the command interpreter."""
 
 import cmd
 from models.base_model import BaseModel
@@ -13,6 +13,7 @@ from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
 import json
+
 
 class HBNBCommand(cmd.Cmd):
 
@@ -101,10 +102,10 @@ class HBNBCommand(cmd.Cmd):
         except AttributeError:
             print("** instance id missing **")
 
-
     def do_destroy(self, command):
         """
-        Deletes an instance based on the class name and id (save the change into the JSON file)
+        Deletes an instance based on the class name
+        and id (save the change into the JSON file)
         """
         if not command:
             print("** class name missing **")
@@ -120,18 +121,21 @@ class HBNBCommand(cmd.Cmd):
             if name not in objects:
                 print("** no instance found **")
             else:
-                obj_destroy = objects[name]
-                if obj_destroy:
+                obj_de = objects[name]
+                """
+                obj_de stands for object to destroy
+                """
+                if obj_de:
                     objs = storage.all()
-                    del objs["{}.{}".format(type(obj_destroy).__name__, obj_destroy.id)]
+                    del objs["{}.{}".format(type(obj_de).__name__, obj_de.id)]
                     storage.save()
         else:
             print("** class doesn't exist **")
 
-
     def do_all(self, command):
         """
-        Prints all string representation of all instances based or not on the class name
+        Prints all string representation of all
+        instances based or not on the class name.
         """
         objects = storage.all()
         instances = []
@@ -148,11 +152,12 @@ class HBNBCommand(cmd.Cmd):
             print(instances)
         else:
             print("** class doesn't exist **")
-    
 
     def do_update(self, command):
         """
-        Update an instance based on the class name and id by adding or updating attribute (save the change into the JSON file).
+        Update an instance based on the class name and
+        id by adding or updating attribute
+        (save the change into the JSON file).
         """
         if not command:
             print("** class name missing **")
@@ -182,15 +187,14 @@ class HBNBCommand(cmd.Cmd):
         else:
             print("** class doesn't exist **")
 
-
-    def do_EOF(self,command):
+    def do_EOF(self, command):
         """
         End of file character handler.
         """
         print()
         return True
 
-    def do_quit(self,command):
+    def do_quit(self, command):
         """
         Exit the console.
         """
