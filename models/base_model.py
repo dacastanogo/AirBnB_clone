@@ -13,7 +13,6 @@ class BaseModel:
         """Creating a new BaseModel with defined args"""
         if len(kwargs) != 0:
             for k, v in kwargs.items():
-            """k and v for key and value"""
                 if k in ["created_at", "updated_at"]:
                     v = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
                 if k not in ['__class__']:
