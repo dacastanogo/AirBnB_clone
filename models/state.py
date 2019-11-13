@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Class State inherits from BaseModel class
+Class Statee inherits from BaseModel class
 """
 from models.base_model import BaseModel
 

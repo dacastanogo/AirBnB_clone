@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Importing models using the FileStorage class
+Importing modelss using the FileStorage class
 """
 
 import json

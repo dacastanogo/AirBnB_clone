@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Class City inherits from BaseModel
+Class Cityy inherits from BaseModel
 """
 from models.base_model import BaseModel
 
