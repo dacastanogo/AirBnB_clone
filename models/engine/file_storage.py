@@ -69,11 +69,12 @@ class FileStorage:
         Deserializes the JSON file to __objects only if the JSON file exists
         """
         try:
-            with open(self.__file_path, 'r', encoding="UTF-8") as f:
-                for k, v in (json.load(f)).items():
-                    """k and v for key and value"""
-                    v = eval(v["__class__"])(**v)
+            with open(self.__file_path, encoding="utf-8") as f:
+                data = json.loads(f.read())
+                new_dict = dict()
+                for key, value in data.items():
+                    classes = value['__class__']
+                    self.__objects[key] = globals()[classes](**value)
 
-                    self.__objects[k] = v
-        except FileNotFoundError:
+        except Exception:
             pass
