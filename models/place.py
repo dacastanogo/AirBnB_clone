@@ -7,7 +7,8 @@ from models.base_model import BaseModel
 
 class Place(BaseModel):
     """
-    Place class, inherits from BaseModel, contains public attributes, and use FileStorage
+    Place class, inherits from BaseModel,
+    contains public attributes, and use FileStorage
     system to do a correct serialization and deserialization
     """
     city_id = ""
