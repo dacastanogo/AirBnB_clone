@@ -79,7 +79,7 @@ class HBNBCommand(cmd.Cmd):
             if len(tokens) == 0:
                 print("** class name missing **")
                 return
-            if tokens[0] in storage.classes:
+            if tokens[0] in storage.classes():
                 if len(tokens) > 1:
                     key = tokens[0] + "." + tokens[1]
                     if key in objects:
@@ -93,7 +93,54 @@ class HBNBCommand(cmd.Cmd):
                 print("** class doesn't exist **")
         except AttributeError:
             print("** instance id missing **")
-            
+
+
+    def do_destroy(self, command):
+        """
+        Deletes an instance based on the class name and id (save the change into the JSON file)
+        """
+        if not command:
+            print("** class name missing **")
+            return
+        tokens = command.split(" ")
+        objects = storage.all()
+
+        if tokens[0] in storage.classes:
+            if len(tokens) < 2:
+                print("** instance id missing **")
+                return
+            name = tokens[0] + "." + tokens[1]
+            if name not in objects:
+                print("** no instance found **")
+            else:
+                obj_destroy = objects[name]
+                if obj_destroy:
+                    objs = storage.all()
+                    del objs["{}.{}".format(type(obj_destroy).__name__, obj_destroy.id)]
+                    storage.save()
+        else:
+            print("** class doesn't exist **")
+
+
+    def do_all(self, command):
+        """
+        Prints all string representation of all instances based or not on the class name
+        """
+        objects = storage.all()
+        instances = []
+        if not command:
+            for name in objects:
+                instances.append(objects[name])
+            print(instances)
+            return
+        tokens = command.split(" ")
+        if tokens[0] in storage.classes:
+            for name in objects:
+                if name[0:len(tokens[0])] == tokens[0]:
+                    instances.append(objects[name])
+            print(instances)
+        else:
+            print("** class doesn't exist **")
 
     def do_EOF(self,command):
         """
