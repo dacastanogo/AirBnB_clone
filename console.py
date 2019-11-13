@@ -3,6 +3,7 @@
 
 import cmd
 import models
+from datetime import datetime
 from models.base_model import BaseModel
 from models import storage
 import json
@@ -141,6 +142,40 @@ class HBNBCommand(cmd.Cmd):
             print(instances)
         else:
             print("** class doesn't exist **")
+    
+
+    def do_update(self, command):
+        """
+        Update an instance based on the class name and id by adding or updating attribute (save the change into the JSON file).
+        """
+        if not command:
+            print("** class name missing **")
+            return
+        tokens = command.split(" ")
+        objects = storage.all()
+        if tokens[0] in storage.classes:
+            if len(tokens) < 2:
+                print("** instance id missing **")
+                return
+            name = tokens[0] + "." + tokens[1]
+            if name not in objects:
+                print("** no instance found **")
+            else:
+                obj_update = objects[name]
+                denied_access = ["id", "created_at", "updated_at"]
+                if obj_update:
+                    arguments = command.split(" ")
+                    if len(arguments) < 3:
+                        print("** attribute name missing **")
+                    elif len(arguments) < 4:
+                        print("** value missing **")
+                    elif arguments[2] not in denied_access:
+                        obj_update.__dict__[arguments[2]] = arguments[3]
+                        obj_update.updated_at = datetime.now()
+                        storage.save()
+        else:
+            print("** class doesn't exist **")
+
 
     def do_EOF(self,command):
         """
