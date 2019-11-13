@@ -5,7 +5,7 @@ import cmd
 import models
 from models.base_model import BaseModel
 from models.user import User
-from models import storage, classes
+from models import storage
 from datetime import datetime
 from models.city import City
 from models.state import State
@@ -20,7 +20,6 @@ class HBNBCommand(cmd.Cmd):
     """Command interpreter class"""
 
     prompt = "(hbnb)"
-    allowed_classes = classes
     """
     _____________________$$$
     ____________________$___$
@@ -72,10 +71,10 @@ class HBNBCommand(cmd.Cmd):
             return
 
         tokens = command.split(" ")
-        if tokens[0] not in self.allowed_classes():
+        if tokens[0] not in storage.classes():
             print("** class doesn't exist **")
         else:
-            new = self.allowed_classes()[tokens[0]]()
+            new = storage.classes()[tokens[0]]()
             new.save()
             print(new.id)
 
@@ -89,7 +88,7 @@ class HBNBCommand(cmd.Cmd):
             if len(tokens) == 0:
                 print("** class name missing **")
                 return
-            if tokens[0] in self.allowed_classes():
+            if tokens[0] in storage.classes():
                 if len(tokens) > 1:
                     key = tokens[0] + "." + tokens[1]
                     if key in objects:
@@ -115,7 +114,7 @@ class HBNBCommand(cmd.Cmd):
         tokens = command.split(" ")
         objects = storage.all()
 
-        if tokens[0] in self.allowed_classes:
+        if tokens[0] in storage.classes():
             if len(tokens) < 2:
                 print("** instance id missing **")
                 return
@@ -147,7 +146,7 @@ class HBNBCommand(cmd.Cmd):
             print(instances)
             return
         tokens = command.split(" ")
-        if tokens[0] in self.allowed_classes:
+        if tokens[0] in storage.classes():
             for name in objects:
                 if name[0:len(tokens[0])] == tokens[0]:
                     instances.append(objects[name])
@@ -166,7 +165,7 @@ class HBNBCommand(cmd.Cmd):
             return
         tokens = command.split(" ")
         objects = storage.all()
-        if tokens[0] in self.allowed_classes:
+        if tokens[0] in storage.classes():
             if len(tokens) < 2:
                 print("** instance id missing **")
                 return
