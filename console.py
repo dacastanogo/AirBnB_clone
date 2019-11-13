@@ -2,13 +2,13 @@
 """Modulee for the entry point of the command interpreter."""
 
 import cmd
+import models
 from models.base_model import BaseModel
-from models.engine.file_storage import FileStorage
-from models.__init__ import storage
-from datetime import datetime
 from models.user import User
-from models.state import State
+from models import storage, classes
+from datetime import datetime
 from models.city import City
+from models.state import State
 from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
@@ -20,6 +20,7 @@ class HBNBCommand(cmd.Cmd):
     """Command interpreter class"""
 
     prompt = "(hbnb)"
+    allowed_classes = classes
     """
     _____________________$$$
     ____________________$___$
@@ -68,12 +69,13 @@ class HBNBCommand(cmd.Cmd):
         """
         if command == "" or command is None:
             print("** class name missing **")
+            return
 
         tokens = command.split(" ")
-        if tokens[0] not in storage.classes():
+        if tokens[0] not in self.allowed_classes():
             print("** class doesn't exist **")
         else:
-            new = storage.classes()[tokens[0]]()
+            new = self.allowed_classes()[tokens[0]]()
             new.save()
             print(new.id)
 
@@ -87,7 +89,7 @@ class HBNBCommand(cmd.Cmd):
             if len(tokens) == 0:
                 print("** class name missing **")
                 return
-            if tokens[0] in storage.classes():
+            if tokens[0] in self.allowed_classes():
                 if len(tokens) > 1:
                     key = tokens[0] + "." + tokens[1]
                     if key in objects:
@@ -113,7 +115,7 @@ class HBNBCommand(cmd.Cmd):
         tokens = command.split(" ")
         objects = storage.all()
 
-        if tokens[0] in storage.classes:
+        if tokens[0] in self.allowed_classes:
             if len(tokens) < 2:
                 print("** instance id missing **")
                 return
@@ -145,7 +147,7 @@ class HBNBCommand(cmd.Cmd):
             print(instances)
             return
         tokens = command.split(" ")
-        if tokens[0] in storage.classes:
+        if tokens[0] in self.allowed_classes:
             for name in objects:
                 if name[0:len(tokens[0])] == tokens[0]:
                     instances.append(objects[name])
@@ -164,7 +166,7 @@ class HBNBCommand(cmd.Cmd):
             return
         tokens = command.split(" ")
         objects = storage.all()
-        if tokens[0] in storage.classes:
+        if tokens[0] in self.allowed_classes:
             if len(tokens) < 2:
                 print("** instance id missing **")
                 return
