@@ -2,7 +2,7 @@
 """Importing models using the FileStorage class """
 
 import json
-
+import models
 
 class FileStorage:
     """Class that serializes instances to a JSON file and deserializes JSON file to instances"""
@@ -53,12 +53,12 @@ class FileStorage:
 
     def reload(self):
         """Deserializes the JSON file to __objects only if the JSON file exists"""
-    try:
+        try:
             with open(self.__file_path, 'r', encoding="UTF-8") as f:
                 for k, v in (json.load(f)).items():
                     """k and v for key and value"""
                     v = eval(v["__class__"])(**v)
 
-                    self.__objects[key] = v
-    except FileNotFoundError:
+                    self.__objects[k] = v
+        except FileNotFoundError:
             pass
