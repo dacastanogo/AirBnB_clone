@@ -23,7 +23,7 @@ class FileStorage:
         new_dict = {}
         save_file = self.__file_path
         """k for key"""
-        for key, i in self.__objects.items():
+        for k, item in self.__objects.items():
             new_dict[k] = item.to_dict()
         with open(save_file, "w", encoding='utf-8') as new_file:
             json.dump(new_dict, new_file)
@@ -53,4 +53,3 @@ class FileStorage:
 
     def reload(self):
         """Deserializes the JSON file to __objects only if the JSON file exists"""
-        
