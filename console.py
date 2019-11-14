@@ -194,13 +194,14 @@ class HBNBCommand(cmd.Cmd):
         """
         objects = storage.all()
         count = 0
-        if command in storage.classes():
+        tokens = command.split('.')
+        if tokens[0] in storage.classes():
             for name in objects:
-                if name[0:len(command)] == command:
+                if name[0:len(tokens[0])] == tokens[0]:
                     count += 1
             print(count)
         else:
-            print("** class doesn't exist **")
+            pass
 
     def do_EOF(self, command):
         """

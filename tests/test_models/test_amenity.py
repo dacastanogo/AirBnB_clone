@@ -26,14 +26,13 @@ class Test_Amenity(unittest.TestCase):
         self.assertTrue(len(Amenity.__str__.__doc__) > 1)
         self.assertTrue(len(Amenity.save.__doc__) > 1)
         self.assertTrue(len(Amenity.to_dict.__doc__) > 1)
-        
+
     def test_str_method(self):
         """Tests to see if each method is printing accurately"""
         obj = Amenity()
         objprinted = obj.__str__()
         self.assertEqual(objprinted,
                          "[Amenity] ({}) {}".format(obj.id, obj.__dict__))
-
 
     def test_before_todict(self):
         """Tests instances before using to_dict conversion"""

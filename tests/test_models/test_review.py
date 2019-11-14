@@ -16,16 +16,16 @@ class Test_Review(unittest.TestCase):
     def test_pep8(self):
         """test pep8 comes back clean"""
         style = pep8.StyleGuide(quiet=True)
-        result = style.check_files(['models/place.py'])
+        result = style.check_files(['models/review.py'])
         self.assertEqual(result.total_errors, 0, "fix pep8")
 
     def test_docstring(self):
         """Checks if the docstring exists for each method and constructor"""
-        self.assertTrue(len(Place.__doc__) > 1)
-        self.assertTrue(len(Place.__init__.__doc__) > 1)
-        self.assertTrue(len(Place.__str__.__doc__) > 1)
-        self.assertTrue(len(Place.save.__doc__) > 1)
-        self.assertTrue(len(Place.to_dict.__doc__) > 1)
+        self.assertTrue(len(Review.__doc__) > 1)
+        self.assertTrue(len(Review.__init__.__doc__) > 1)
+        self.assertTrue(len(Review.__str__.__doc__) > 1)
+        self.assertTrue(len(Review.save.__doc__) > 1)
+        self.assertTrue(len(Review.to_dict.__doc__) > 1)
 
     def test_str_method(self):
         """Tests to see if each method is printing accurately"""
