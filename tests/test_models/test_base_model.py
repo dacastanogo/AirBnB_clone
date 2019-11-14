@@ -1,113 +1,75 @@
 #!/usr/bin/python3
-"""Test cases for BaseModel"""
-import os
+"""
+Unittest for base_model
+"""
 import unittest
-from datetime import datetime
 from models.base_model import BaseModel
+import pep8
+import datetime
 
 
-class Base_Model_Testing(unittest.TestCase):
-    """BaseModel Testing"""
-    def NewInstance(self):
-        """
-        Creating a new instance before each test
-        """
-        self.bm1 = BaseModel()
+class Test_BaseModel(unittest.TestCase):
+    """
+    Test class BaseModel
+    """
+    def test_pep8(self):
+        """Pep8 Test"""
+        style = pep8.StyleGuide(quiet=True)
+        result = style.check_files(['models/base_model.py'])
+        self.assertEqual(result.total_errors, 0, "fix pep8")
 
-    def ClearTest(self):
-        """
-        Clearing previous instance before next test
-        """
-        del self.bm1
+    def test_docstring(self):
+        """Checks if the docstring exists for each method and constructor"""
+        self.assertTrue(len(BaseModel.__doc__) > 1)
+        self.assertTrue(len(BaseModel.__init__.__doc__) > 1)
+        self.assertTrue(len(BaseModel.__str__.__doc__) > 1)
+        self.assertTrue(len(BaseModel.save.__doc__) > 1)
+        self.assertTrue(len(BaseModel.to_dict.__doc__) > 1)
 
-    def CheckId(self):
-        """
-        Looks for ID attribute in BaseModel
-        """
-        self.assertEqual(bm1.id is None, False)
+    def test_hasattribute(self):
+        """Tests if the instance of BaseModel have been correctly made"""
+        obj = BaseModel()
+        self.assertTrue(hasattr(obj, "__init__"))
+        self.assertTrue(hasattr(obj, "created_at"))
+        self.assertTrue(hasattr(obj, "updated_at"))
+        self.assertTrue(hasattr(obj, "id"))
 
-    def CheckUUID(self):
-        """
-        Looks for Unique ID 
-        """
-        bm2 = BaseModel()
-        self.assertNotEqual(self.bm1.id, bm2.id)
+    def test_type_id(self):
+        """ Checks if the attribute id is a str """
+        obj = BaseModel()
+        self.assertEqual(type(obj.id), str)
 
-    def Check_ID_type(self):
-        """
-        Checks id is of str type
-        """
-        bm1 = BaseModel()
-        self.assertEqual(type(self.bm1.id), str)
+    def test_type_update_at(self):
+        """ Checks if update_at is type datetime """
+        obj = BaseModel()
+        self.assertEqual(type(obj.updated_at), datetime.datetime)
 
-    def Check_CreatedAt(self):
-        """
-        Checks if created_at is datetime type
-        """
-        self.assertEqual(type(self.bm1.created_at), datetime)
-    
-    def Check_Created_at_Not_None(self):
-        """
-        Checks that created_at attribute isnt None
-        """
-        bm1 = BaseModel()
-        self.assertEqual(bm1.created_at is None, False)
+    def test_type_created_at(self):
+        """ Checks if created_at is type datetime """
+        obj = BaseModel()
+        self.assertEqual(type(obj.created_at), datetime.datetime)
+    def test_before_todict(self):
+        """Tests the instance before using the todict conversion"""
+        obj = BaseModel()
+        obj = obj.__dict__
+        self.assertEqual(type(obj).__name__, "dict")
+        self.assertTrue(hasattr(obj, '__class__'))
+        self.assertEqual(str(obj.__class__),
+                         "<class 'models.base_model.BaseModel'>")
+        self.assertTrue(type(obj_dict['created_at']), 'datetime.datetime')
+        self.assertTrue(type(obj_dict['updated_at']), 'datetime.datetime')
+        self.assertTrue(type(obj_dict['id']), 'str')
 
-
-    def Check_UpdatedAt(self):
-        """
-        Checks if updated_at is datetime type
-        """
-        self.assertEqual(type(self.bm1.updated_at), datetime)
-    
-    def Check_Updated_at_Not_None(self):
-    
-        """
-        Checks that updated_at attribute isnt None
-        """
-        bm1 = BaseModel()
-        self.assertEqual(bm1.updated_at is None, False)
-
-    def Check_Save__Funct(self):
-        """
-        Checks if save method updates updated_at
-        """
-        previous_updated_at = self.bm1.updated_at
-        self.bm1.save()
-        self.assertNotEqual(previous_updated_at, self.bm1.updated_at)
-
-    def Check_NewerDate_Updated(self):
-        """
-        Checks if new updated dater is newer than previous pre save() date
-        """
-        bm1 = BaseModel()
-        upd1 = bm1.updated_at
-        bm1.save()
-        upd2 = bm1.updated_at
-        self.assertEqual(upd1 < upd2, True)
-
-    def Check_ReturnType(self):
-        """
-        Checks the return type to be __str__
-        """
-        self.assertEqual(str(self.bm1), "[BaseModel] ({}) {}".format(self.bm1.id, self.bm1.__dict__))
-
-    def Check_to_dict(self):
-        """
-        Checks that to_dict method returns a dictionary
-        """
-        bm1 = BaseModel()
-        dictionary1 = bm1.to_dict()
-        self.assertEqual(type(dictionary1), dict)
-
-    def Compare_Kwargs(self):
-        """
-        Compares kwargs and BaseModel Instances 
-        """
-        json = self.bm1.to_dict()
-        bm2 = BaseModel(**json)
-        self.assertEqual(self.bm1.id, bm2.id)
-        self.assertEqual(self.bm1.created_at, bm2.created_at)
-        self.assertEqual(self.bm1.updated_at, bm2.updated_at)
-        self.assertNotEqual(self.bm1, bm2)
-        
+    def test_after_todict(self):
+        """Tests instances after using to_dict conversion"""
+        my_model = BaseModel()
+        new_model = BaseModel()
+        test_dict = my_model.to_dict()
+        self.assertIsInstance(my_model, BaseModel)
+        self.assertEqual(type(my_model).__name__, "BaseModel")
+        self.assertEqual(test_dict['__class__'], "BaseModel")
+        self.assertTrue(type(test_dict['__class__']), 'str')
+        self.assertTrue(type(test_dict['created_at']), 'str')
+        self.assertTrue(type(test_dict['updated_at']), 'str')
+        self.assertTrue(type(test_dict['id']), 'str')
+        self.assertNotEqual(my_model.id, new_model.id)

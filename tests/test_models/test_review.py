@@ -1,18 +1,16 @@
 #!/usr/bin/python3
 """
-Unittest for state
+Unittest for review
 """
 
 
-from models.state import State
+from models.review import Review
 import pep8
-import os
 import unittest
 
-
-class Test_State(unittest.TestCase):
+class Test_Review(unittest.TestCase):
     """
-    Unittest for the class State
+    Unittest for the class Review
     """
 
     def test_pep8(self):
@@ -31,31 +29,31 @@ class Test_State(unittest.TestCase):
 
     def test_str_method(self):
         """Tests to see if each method is printing accurately"""
-        obj = State()
+        obj = Review()
         objprinted = obj.__str__()
         self.assertEqual(objprinted,
-                         "[State] ({}) {}".format(obj.id, obj.__dict__))
+                         "[Review] ({}) {}".format(obj.id, obj.__dict__))
 
     def test_before_todict(self):
         """Tests instances before using to_dict conversion"""
-        obj = State()
+        obj = Review()
         obj_dict = obj.__dict__
-        self.assertEqual(type(obj).__name__, "State")
+        self.assertEqual(type(obj).__name__, "Review")
         self.assertTrue(hasattr(obj, '__class__'))
         self.assertEqual(str(obj.__class__),
-                         "<class 'models.state.State'>")
+                         "<class 'models.review.Review'>")
         self.assertTrue(type(obj_dict['created_at']), 'datetime.datetime')
         self.assertTrue(type(obj_dict['updated_at']), 'datetime.datetime')
         self.assertTrue(type(obj_dict['id']), 'str')
 
     def test_after_todict(self):
         """Test instances after using to_dict conversion"""
-        my_model = State()
-        new_model = State()
+        my_model = Review()
+        new_model = Review()
         test_dict = my_model.to_dict()
-        self.assertIsInstance(my_model, State)
-        self.assertEqual(type(my_model).__name__, "State")
-        self.assertEqual(test_dict['__class__'], "State")
+        self.assertIsInstance(my_model, Review)
+        self.assertEqual(type(my_model).__name__, "Review")
+        self.assertEqual(test_dict['__class__'], "Review")
         self.assertTrue(type(test_dict['__class__']), 'str')
         self.assertTrue(type(test_dict['created_at']), 'str')
         self.assertTrue(type(test_dict['updated_at']), 'str')
@@ -64,7 +62,7 @@ class Test_State(unittest.TestCase):
 
     def test_hasattribute(self):
         """Tests if the instance of BaseModel has been correctly made"""
-        obj = State()
+        obj = Review()
         self.assertTrue(hasattr(obj, "__init__"))
         self.assertTrue(hasattr(obj, "created_at"))
         self.assertTrue(hasattr(obj, "updated_at"))
