@@ -2,7 +2,8 @@
 """
 Test Cases for Amenity model
 """
-
+import os
+import models
 import unittest
 from datetime import datetime
 from models.amenity import Amenity
