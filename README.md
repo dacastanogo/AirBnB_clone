@@ -32,16 +32,6 @@ Review
 
 Inherits from  `BaseModel`
 
-Inherits from  `BaseModel`
-
-Inherits from  `BaseModel`
-
-Inherits from  `BaseModel`
-
-Inherits from  `BaseModel`
-
-Inherits from  `BaseModel`
-
 **PUBLIC INSTANCE METHODS**
 
 `save`  
