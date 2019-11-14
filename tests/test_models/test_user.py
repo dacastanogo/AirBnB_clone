@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Test Cases for Amenity model
+Test Cases for User model
 """
 import os
 import unittest
@@ -9,12 +9,12 @@ from models.amenity import Amenity
 from models.base_model import BaseModel
 
 
-class Amenity_Testing(unittest.TestCase):
-    """Amenity Testing"""
+class User_Testing(unittest.TestCase):
+    """User Testing"""
     
     def Check_BaseModel_Inheritance(self):
         """
-        Checks that Amenty inherits from BaseModel
+        Checks that User inherits from BaseModel
         """
         am1 = Amenity()
         self.assertEqual(issubclass(type(am1), BaseModel), True)

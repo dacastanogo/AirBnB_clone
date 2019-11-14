@@ -3,7 +3,6 @@
 Test Cases for City model
 """
 import os
-import models
 import unittest
 from datetime import datetime
 from models.city import City

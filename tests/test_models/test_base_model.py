@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """Test cases for BaseModel"""
 import os
-import models
 import unittest
 from datetime import datetime
 from models.base_model import BaseModel
@@ -111,3 +110,4 @@ class Base_Model_Testing(unittest.TestCase):
         self.assertEqual(self.bm1.created_at, bm2.created_at)
         self.assertEqual(self.bm1.updated_at, bm2.updated_at)
         self.assertNotEqual(self.bm1, bm2)
+        

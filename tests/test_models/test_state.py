@@ -3,7 +3,6 @@
 Test Cases for State model
 """
 import os
-import models
 import unittest
 from datetime import datetime
 from models.state import State
@@ -46,3 +45,4 @@ class State_Testing(unittest.TestCase):
         """
         st1 = State()
         self.assertEqual(type(st1.id) is str, True)
+        
