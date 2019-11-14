@@ -69,11 +69,12 @@ class FileStorage:
         """
         Deserializes the JSON file to __objects only if the JSON file exists
         """
-        if os.path.isfile(self.__file_path):
-            if os.stat(self.__file_path).st_size != 0:
-                with open(self.__file_path, encoding='UTF-8') as my_file:
-                    new_object = json.load(my_file)
-                for key, value in new_object.items():
-                    class_name = value['__class__']
-                    del value['__class__']
-                    self.__objects[key] = eval(class_name)(**value)
+        if os.path.exists(FileStorage.__file_path):
+            with open(FileStorage.__file_path, encoding='utf-8') as des_file:
+                loaded_dict = json.load(des_file)
+                for key, value in loaded_dict.items():
+                    identifier = value['__class__']
+                    obj = globals()[identifier](**value)
+                    FileStorage.__objects[key] = obj
+        else:
+            pass
