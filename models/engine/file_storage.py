@@ -1,10 +1,11 @@
 #!/usr/bin/python3
 """
-Importing modelss using the FileStorage class
+Importing models using the FileStorage class
 """
 
 import json
 import models
+import os.path
 
 
 class FileStorage:
@@ -68,13 +69,11 @@ class FileStorage:
         """
         Deserializes the JSON file to __objects only if the JSON file exists
         """
-        try:
-            with open(self.__file_path, encoding="utf-8") as f:
-                data = json.loads(f.read())
-                new_dict = dict()
-                for key, value in data.items():
-                    classes = value['__class__']
-                    self.__objects[key] = globals()[classes](**value)
-
-        except Exception:
-            pass
+        if os.path.isfile(self.__file_path):
+            if os.stat(self.__file_path).st_size != 0:
+                with open(self.__file_path, encoding='UTF-8') as my_file:
+                    new_object = json.load(my_file)
+                for key, value in new_object.items():
+                    class_name = value['__class__']
+                    del value['__class__']
+                    self.__objects[key] = eval(class_name)(**value)
