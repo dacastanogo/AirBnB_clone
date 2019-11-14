@@ -188,6 +188,20 @@ class HBNBCommand(cmd.Cmd):
         else:
             print("** class doesn't exist **")
 
+    def do_count(self, command):
+        """
+        Counts number of instances of a specific class
+        """
+        objects = storage.all()
+        count = 0
+        if command in storage.classes():
+            for name in objects:
+                if name[0:len(command)] == command:
+                    count += 1
+            print(count)
+        else:
+            print("** class doesn't exist **")
+
     def do_EOF(self, command):
         """
         End of file character handler.
