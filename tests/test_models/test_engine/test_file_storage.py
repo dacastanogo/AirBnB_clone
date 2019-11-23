@@ -57,6 +57,11 @@ class TestFileStorage(unittest.TestCase):
         self.assertEqual(type(instances_dic), dict)
         self.assertIs(instances_dic, fstorage._FileStorage__objects)
 
+    def test_classes(self):
+        allclasses = cls.Storage.classes()
+        self.assertIsNotNone(allclasses)
+        self.assertEqual(allclasses, self.storage.classes(), "Failure classes")
+
     def test_new(self):
         """
         Tests method: new (saves object into dictionary)

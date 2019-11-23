@@ -48,6 +48,7 @@ class Test_BaseModel(unittest.TestCase):
         """ Checks if created_at is type datetime """
         obj = BaseModel()
         self.assertEqual(type(obj.created_at), datetime.datetime)
+
     def test_before_todict(self):
         """Tests the instance before using the todict conversion"""
         obj = BaseModel()
@@ -56,9 +57,9 @@ class Test_BaseModel(unittest.TestCase):
         self.assertTrue(hasattr(obj, '__class__'))
         self.assertEqual(str(obj.__class__),
                          "<class 'models.base_model.BaseModel'>")
-        self.assertTrue(type(obj_dict['created_at']), 'datetime.datetime')
-        self.assertTrue(type(obj_dict['updated_at']), 'datetime.datetime')
-        self.assertTrue(type(obj_dict['id']), 'str')
+        self.assertTrue(type(obj['created_at']), 'datetime.datetime')
+        self.assertTrue(type(obj['updated_at']), 'datetime.datetime')
+        self.assertTrue(type(obj['id']), 'str')
 
     def test_after_todict(self):
         """Tests instances after using to_dict conversion"""

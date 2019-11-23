@@ -11,12 +11,12 @@ from models.base_model import BaseModel
 
 class City_Testing(unittest.TestCase):
     """City Testing"""
-    
+
     def Check_BaseModel_Inheritance(self):
         """
         Checks that City inherits from BaseModel
         """
-        c1 = Ctate()
+        c1 = City()
         self.assertEqual(issubclass(type(c1), BaseModel), True)
 
     def CheckName(self):
@@ -41,7 +41,7 @@ class City_Testing(unittest.TestCase):
 
     def CheckId(self):
         """
-        Checks for a valid ID 
+        Checks for a valid ID
         """
         c1 = City()
         self.assertEqual(type(c1.id) is str, True)
